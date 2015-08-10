@@ -1,0 +1,10 @@
+#
+# Files and directories to be ignored by git
+#
+
+
+# Ignore PhpStorm bookkeeping
+.idea/
+
+
+# This is the end of the file
