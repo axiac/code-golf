@@ -99,7 +99,7 @@ function showSomeAction(array $argv)
 
 
 /**
- * The golfed version of showSomeAction (160 bytes)
+ * The golfed version of showSomeAction (160 -> 155 bytes)
  *
  * Some of the tricks used to make it shorter:
  *   * extract the name of the "str_function" into a variable ($f) and use $f to call it instead - only 2 bytes
@@ -113,7 +113,14 @@ function showSomeAction(array $argv)
  */
 function showSomeAction_golfed(array $argv)
 {
-    $f=str_repeat;$m=$f(' ',$r=60-3*($s=min(max($argv[1],0),20)));$l=$f(' ',$s);$c=$r?_.$m._:'/\\';echo"$l  __  $m  __\n{$l}_/  \\$c/  \\_\n{$l}o    o{$m}o    o\n";
+    // My original version (160 bytes)
+//  $f=str_repeat;$m=$f(' ',$r=60-3*($s=min(max($argv[1],0),20)));$l=$f(' ',$s);$c=$r?_.$m._:'/\\';echo"$l  __  $m  __\n{$l}_/  \\$c/  \\_\n{$l}o    o{$m}o    o\n";
+
+    // Suggested by http://codegolf.stackexchange.com/users/14732/ismael-miguel (156 bytes)
+//  $f=str_repeat;$m=$f(' ',$r=60-3*($s=min(max($argv[1],0),20)));echo$l=$f(' ',$s),"  __  $m  __\n{$l}_/  \\",$r?_.$m._:'/\\',"/  \\_\n{$l}o    o{$m}o    o\n";
+
+    // Reworked: swapping the initialization of $m and $s allows the removal of one pair of parentheses (155 bytes)
+    $f=str_repeat;echo$l=$f(' ',$s=min(max($argv[1],0),20)),"  __  ",$m=$f(' ',$r=60-3*$s),"  __\n{$l}_/  \\",$r?_.$m._:'/\\',"/  \\_\n{$l}o    o{$m}o    o\n";
 }
 
 
