@@ -5,17 +5,6 @@
  * @link http://codegolf.stackexchange.com/questions/79668/is-the-electric-garage-door-open
  */
 
-// Check the PHP version
-if (PHP_VERSION < '5.4') {
-    // This script uses features introduced in PHP 5.4 (short array syntax)
-    // PHP 5.4 is dead meat now; it reached its end of life on September 14, 2014
-    exit("PHP 5.4 or newer is required. Dare to advance, don't live in the past!");
-}
-
-// Hide notices. It can be passed as argument to the CLI:
-//   php -d error_reporting=0 recursive-ascii-spirals.php
-error_reporting(E_ALL & ~E_NOTICE);
-
 // Include the code-golf framework; it loads the testing frameworks
 require 'a/CodeGolfFramework.php';
 
@@ -63,18 +52,21 @@ class ElectricGarageDoor extends ACodeGolfProblem
      */
     protected function testDoorStatus(array $delays, $expected)
     {
+        // Format the input for display
+        $input = implode(' ', $delays);
+
         // Put the script path in front of the arguments; the real program gets its arguments from the command line
         array_unshift($delays, __FILE__);
 
         // Test the plain-code function
         it(
-            sprintf("handles '%s' correctly: %s  -- clear  version", implode(' ', $delays), $expected),
+            sprintf("turns input '%s' into output '%s' -- clear  version", $input, $expected),
             $this->getFunctionOutput(function () use ($delays) { $this->handleDoor($delays); }) === $expected
         );
 
         // Test the golfed function
         it(
-            sprintf("handles '%s' correctly: %s  -- golfed version", implode(' ', $delays), $expected),
+            sprintf("turns input '%s' into output '%s' -- golfed version", $input, $expected),
             $this->getFunctionOutput(function () use ($delays) { $this->hndlDr($delays); }) === $expected
         );
     }

@@ -17,7 +17,7 @@ define('TEST_GOLFED_CODE', FALSE);
 // Hide notices. Could suppress them by using '@' in the line:
 //   $line .= $map[$y][$x] ?: ' ';
 // error_reporting() is better because it can be passed as argument to the CLI:
-//   php -d error_reporting=0 treasure.php
+//   php -d error_reporting=0 yarr-a-map-to-the-hidden-treasure.php
 // This saves one byte.
 error_reporting(E_ALL & ~E_NOTICE);
 

@@ -5,17 +5,6 @@
  * @link http://codegolf.stackexchange.com/questions/1938/code-golf-lattice-points-inside-a-circle
  */
 
-// Check the PHP version
-if (PHP_VERSION < '5.4') {
-    // This script uses features introduced in PHP 5.4 (short array syntax)
-    // PHP 5.4 is dead meat now; it reached its end of life on September 14, 2014
-    exit("PHP 5.4 or newer is required. Dare to advance, don't live in the past!");
-}
-
-// Hide notices. It can be passed as argument to the CLI:
-//   php -d error_reporting=0 recursive-ascii-spirals.php
-error_reporting(E_ALL & ~E_NOTICE);
-
 // Load the code-golf framework
 include 'a/CodeGolfFramework.php';
 

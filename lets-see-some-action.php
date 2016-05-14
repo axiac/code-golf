@@ -11,7 +11,7 @@ if (PHP_VERSION < '5.4') {
 }
 
 // Hide notices. It can be passed as argument to the CLI:
-//   php -d error_reporting=0 giving-directions.php
+//   php -d error_reporting=0 lets-see-some-action.php
 error_reporting(E_ALL & ~E_NOTICE);
 
 

@@ -13,7 +13,7 @@ if (PHP_VERSION < '5.4') {
 }
 
 // Hide notices. It can be passed as argument to the CLI:
-//   php -d error_reporting=0 recursive-ascii-spirals.php
+//   php -d error_reporting=0 ascii-piano-keyboard.php
 error_reporting(E_ALL & ~E_NOTICE);
 
 // Load the test framework appropriate for multi-line tests
