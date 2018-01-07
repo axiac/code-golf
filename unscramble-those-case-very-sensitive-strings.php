@@ -30,14 +30,14 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
 
     public function getTheGolfedCode()
     {
-        return $this->getFunctionBody('unscrmbl2', __CLASS__);
+        return $this->getFunctionBody('unscrmbl3', __CLASS__);
     }
 
 
 
     public function runTheGolfedCode($argc, array $argv)
     {
-        $this->unscrmbl2($argc, $argv);
+        $this->unscrmbl3($argc, $argv);
 
         return 0;
     }
@@ -60,7 +60,7 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
         );
         it(
             sprintf("unscrambles '%s' as '%s' - clear  code #1", $input, $actual),
-            $actual == $expected
+            $actual === $expected
         );
 
         $actual = $this->getFunctionOutput(
@@ -68,7 +68,7 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
         );
         it(
             sprintf("unscrambles '%s' as '%s' - golfed code #1", $input, $actual),
-            $actual == $expected
+            $actual === $expected
         );
 
         if ('7' <= PHP_VERSION) {
@@ -77,7 +77,7 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
             );
             it(
                 sprintf("unscrambles '%s' as '%s' - golfed code #1, PHP7 version", $input, $actual),
-                $actual == $expected
+                $actual === $expected
             );
         }
 
@@ -89,7 +89,7 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
         );
         it(
             sprintf("unscrambles '%s' as '%s' - clear  code #2", $input, $actual),
-            $actual == $expected
+            $actual === $expected
         );
 
         $actual = $this->getFunctionOutput(
@@ -97,7 +97,26 @@ class UnscrambleThoseStrings extends ACodeGolfProblem
         );
         it(
             sprintf("unscrambles '%s' as '%s' - golfed code #2", $input, $actual),
-            $actual == $expected
+            $actual === $expected
+        );
+
+
+        //
+        // The third version: compute the uppercase search string from the lowercase one
+        $actual = $this->getFunctionOutput(
+            function () use ($input) { $this->unscramble3(2, array(__FILE__, (string)$input)); }
+        );
+        it(
+            sprintf("unscrambles '%s' as '%s' - clear  code #3", $input, $actual),
+            $actual === $expected
+        );
+
+        $actual = $this->getFunctionOutput(
+            function () use ($input) { $this->unscrmbl3(2, array(__FILE__, (string)$input)); }
+        );
+        it(
+            sprintf("unscrambles '%s' as '%s' - golfed code #3", $input, $actual),
+            $actual === $expected
         );
     }
 
@@ -172,6 +191,36 @@ echo($f=preg_replace)("/([a-z])([^a-z]*)([a-z])/",$r="$3$2$1",$f("/([A-Z])([^A-Z
     protected function unscrmbl2($argc, array $argv)
     {
         echo preg_replace(["/([a-z])([^a-z]*)([a-z])/","/([A-Z])([^A-Z]*)([A-Z])/"],"$3$2$1",$argv[1]);
+    }
+
+
+
+    /**
+     * Version #3, squeeze several bytes more
+     *
+     * @param int      $argc
+     * @param string[] $argv
+     */
+    protected function unscramble3($argc, array $argv)
+    {
+        echo preg_replace([
+                $a='/([a-z])([^a-z]*)([a-z])/',
+                strtoupper($a),
+            ],
+            '$3$2$1',
+            $argv[1]
+        );
+    }
+
+    /**
+     * The golfed version of unscramble3()
+     *
+     * @param int      $argc
+     * @param string[] $argv
+     */
+    protected function unscrmbl3($argc, array $argv)
+    {
+        echo preg_replace([$a="/([a-z])([^a-z]*)([a-z])/",strtoupper($a)],"$3$2$1",$argv[1]);
     }
 }
 
