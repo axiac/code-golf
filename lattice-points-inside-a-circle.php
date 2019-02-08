@@ -184,14 +184,16 @@ class LatticePointsInsideACircle extends ACodeGolfProblem
      *   * skipped the initialization of $y and $c with 0; the contexts where they are used
      *     make the interpreter initialize them with 0 on their first use;
      *   * swapped '4*$c' to '$c*4' on the 'return' statement; this way the whitespace between
-     *     'return' and '$c' can be eliminated
+     *     'return' and '$c' can be eliminated;
+     *   * moved '$c+=$x' inside the third expression of the outer 'for' statement; saved 2 bytes
+     *     (the curly braces of the outer 'for' statement)
      *
      * @param int $n
      * @return int
      */
     protected function cntLttcPnts2($n)
     {
-        for($x=$n;$x;$y++){for(;$n*$n<$x*$x+$y*$y;$x--);$c+=$x;}return$c*4+1;
+        for($x=$n;$x;$c+=$x,$y++)for(;$n*$n<$x*$x+$y*$y;$x--);return$c*4+1;
     }
 }
 
