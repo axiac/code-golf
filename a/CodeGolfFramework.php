@@ -13,6 +13,11 @@ if (PHP_VERSION < '5.4') {
 // Hide notices. It can be passed as argument to the CLI:
 //   php -d error_reporting=0 ...
 error_reporting(E_ALL & ~E_NOTICE);
+// Since PHP 7.2 some notices were promoted to warnings
+// and this is very good for clean code but not for golfing
+if ('7.2' <= PHP_VERSION) {
+    error_reporting(E_ALL & ~(E_WARNING | E_NOTICE));
+}
 
 
 // Include both test frameworks
@@ -247,7 +252,6 @@ E;
     }
 
 
-
     /**
      * Get the body of a function by reading it from the source file.
      *
@@ -255,14 +259,19 @@ E;
      * reads the lines from disk, strips the function's header and closing parenthesis
      * then trims and returns the function's body. It doesn't strip the comments.
      *
-     * @param string      $fnName
+     * @param string      $fnName function or method name
      * @param string|null $class  use NULL for global functions
      * @return string
      */
     protected function getFunctionBody($fnName, $class = NULL)
     {
         // Use reflection to find the location of the function in the file and extract its code
-        $f = isset($class) ? new ReflectionMethod($class, $fnName): new ReflectionFunction($fnName);
+        try {
+            $f = isset($class) ? new ReflectionMethod($class, $fnName) : new ReflectionFunction($fnName);
+        } catch (ReflectionException $e) {
+            printf("The % '%s' does not exist.\n", isset($class) ? 'method' : 'function', ($class ? "${class}::" : '').$fnName);
+            return '';
+        }
         $text = implode(
             '', array_slice(
             file($f->getFileName()), $f->getStartLine() - 1, $f->getEndLine() - $f->getStartLine() + 1
