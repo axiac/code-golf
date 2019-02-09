@@ -13,6 +13,11 @@ if (PHP_VERSION < '5.4') {
 // Hide notices. It can be passed as argument to the CLI:
 //   php -d error_reporting=0 lets-see-some-action.php
 error_reporting(E_ALL & ~E_NOTICE);
+// Since PHP 7.2 some notices were promoted to warnings
+// and this is very good for clean code but not for golfing
+if ('7.2' <= PHP_VERSION) {
+    error_reporting(E_ALL & ~(E_WARNING | E_NOTICE));
+}
 
 
 // Load the test framework appropriate for multi-line tests
